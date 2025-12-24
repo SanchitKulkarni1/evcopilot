@@ -29,7 +29,7 @@ const Header = () => {
         <div className="container mx-auto flex h-16 items-center justify-between px-4 lg:px-8">
           {/* Logo */}
           <a href="/" className="flex items-center">
-            <img src={logo} alt="VOCOPILOT" className="h-8 w-auto" />
+            <img src={logo} alt="VOCOPILOT" className="h-14 w-auto" />
           </a>
 
           {/* Desktop Navigation */}

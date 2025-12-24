@@ -26,7 +26,7 @@ const Footer = () => {
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-5">
           {/* Brand Column */}
           <div className="lg:col-span-1">
-            <img src={logo} alt="VOCOPILOT" className="mb-4 h-8 w-auto" />
+            <img src={logo} alt="VOCOPILOT" className="mb-4 h-14 w-auto" />
             <p className="mb-6 text-sm text-muted-foreground">
               Transforming careers through industry-aligned tech education.
             </p>
