@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { Menu, X, ChevronDown } from "lucide-react";
-import logo from "@/assets/logo.png";
+import logoLight from "@/assets/logo_lightmode.png";
+import logoDark from "@/assets/logo_darkmode.png";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -36,9 +38,14 @@ const Header = () => {
           {/* Logo */}
           <a href="/" className="flex h-full items-center py-3">
             <img
-              src={logo}
+              src={logoLight}
               alt="EvoCopilot"
-              className="h-24 w-auto object-contain md:h-28 lg:h-32"
+              className="block h-32 w-auto object-contain md:h-40 lg:h-48 dark:hidden"
+            />
+            <img
+              src={logoDark}
+              alt="EvoCopilot"
+              className="hidden h-32 w-auto object-contain md:h-40 lg:h-48 dark:block"
             />
           </a>
 
@@ -69,7 +76,7 @@ const Header = () => {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-3">
-            <Button variant="default">Login</Button>
+            <ThemeToggle />
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -108,10 +115,11 @@ const Header = () => {
                 )
               )}
 
-              <div className="mt-4">
-                <Button variant="default" size="lg" className="w-full">
-                  Login
-                </Button>
+              <div className="mt-4 flex flex-col gap-4">
+                <div className="flex items-center justify-between px-4">
+                  <span className="text-sm font-medium text-foreground">Theme</span>
+                  <ThemeToggle />
+                </div>
               </div>
             </nav>
           </div>

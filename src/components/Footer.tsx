@@ -1,4 +1,5 @@
-import logo from "@/assets/logo.png";
+import logoLight from "@/assets/logo_lightmode.png";
+import logoDark from "@/assets/logo_darkmode.png";
 
 const footerLinks = {
   company: {
@@ -24,9 +25,9 @@ const Footer = () => {
     <footer className="border-t border-border bg-card">
       <div className="container mx-auto px-4 py-12 lg:px-8 lg:py-16">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-5">
-          {/* Brand Column */}
           <div className="lg:col-span-1">
-            <img src={logo} alt="VOCOPILOT" className="mb-4 h-14 w-auto" />
+            <img src={logoLight} alt="VOCOPILOT" className="mb-4 h-32 w-auto dark:hidden" />
+            <img src={logoDark} alt="VOCOPILOT" className="mb-4 h-32 w-auto hidden dark:block" />
             <p className="mb-6 text-sm text-muted-foreground">
               Transforming careers through industry-aligned tech education.
             </p>

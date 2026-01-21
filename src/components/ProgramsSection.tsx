@@ -1,84 +1,107 @@
 import { Button } from "@/components/ui/button";
-import { ChevronRight, Clock, Award, Sparkles } from "lucide-react";
+import { Clock, ChevronRight, Check } from "lucide-react";
 
-const professionalPrograms = [
-  {
-    title: "PG Certification in Data Analytics with GenAI",
-    institute: "IIT Mandi - TIH",
-    duration: "6 months",
-    badge: "Certification with IIT",
-    featured: true,
-  },
-  {
-    title: "Professional Certification in Data Analytics",
-    institute: "Vishlesan i-hub, IIT Patna",
-    duration: "6 months",
-    badge: "Certification with IIT",
-  },
-  {
-    title: "Job Bootcamp - Full Stack Development",
-    institute: "Industry Partners",
-    duration: "4 months",
-    badge: "Job Guarantee",
-  },
-];
-
-const studentPrograms = [
-  {
-    title: "Certification in Full Stack Development",
-    institute: "IIT Certification",
-    duration: "6 months",
-    badge: "Certification with IIT",
-  },
-  {
-    title: "Certification in Data Structures & Algorithms",
-    institute: "IIT Certification",
-    duration: "4 months",
-    badge: "Certification with IIT",
-  },
-  {
-    title: "Certification in Generative AI",
-    institute: "IIT Certification",
-    duration: "3 months",
-    badge: "Certification with IIT",
-    featured: true,
-  },
-];
-
-interface ProgramCardProps {
+interface Program {
   title: string;
-  institute: string;
+  description: string;
   duration: string;
-  badge: string;
-  featured?: boolean;
+  price: string;
+  tags: { text: string; type: "default" | "weekend" }[];
+  keyOutcomes: string[];
+  buildsOn?: string;
 }
 
-const ProgramCard = ({ title, institute, duration, badge, featured }: ProgramCardProps) => (
-  <div className="group flex items-center justify-between rounded-xl border border-border bg-card/50 p-4 transition-all hover:border-primary/30 hover:bg-card">
-    <div className="flex-1">
-      <div className="mb-2 flex items-center gap-2">
-        {featured && <Sparkles className="h-4 w-4 text-primary" />}
-        <h4 className="font-medium text-foreground">{title}</h4>
+const professionalPrograms: Program[] = [
+  {
+    title: "3-Day Intro Sprint",
+    description: "Quick AI mindset reset for busy professionals. Perfect for testing the waters.",
+    duration: "3 Days",
+    price: "₹ 999",
+    tags: [{ text: "Beginner", type: "default" }, { text: "Weekend-Only", type: "weekend" }],
+    keyOutcomes: [
+      "Prompt journal with 10+ refined prompts",
+      "Personal AI action plan",
+      "Basic understanding of AI agents"
+    ]
+  },
+  {
+    title: "14-Day Builder Kickstart",
+    description: "Build basic AI prototypes with hands-on agent training. Learn to ship, not just study.",
+    duration: "14 Days (2 Weekends)",
+    price: "₹ 4,999",
+    tags: [{ text: "Beginner", type: "default" }, { text: "Weekend-Only", type: "weekend" }],
+    keyOutcomes: [
+      "Mini AI prototype (chatbot or automation)",
+      "Understanding of agent workflows",
+      "Problem-framining toolkit"
+    ],
+    buildsOn: "3-Day Intro Sprint"
+  },
+];
+
+const ProgramCard = ({ program }: { program: Program }) => (
+  <div className="flex flex-col justify-between rounded-2xl border border-border bg-card p-6 shadow-sm transition-all hover:shadow-md h-full">
+    <div>
+      <div className="flex items-start justify-between mb-4">
+        <div className="flex gap-2">
+          {program.tags.map((tag, idx) => (
+            <span
+              key={idx}
+              className={`rounded-full px-3 py-1 text-xs font-medium ${tag.type === "weekend"
+                  ? "bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400"
+                  : "bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400"
+                }`}
+            >
+              {tag.text}
+            </span>
+          ))}
+        </div>
       </div>
-      <p className="mb-2 text-sm text-muted-foreground">{institute}</p>
-      <div className="flex flex-wrap items-center gap-3">
-        <span className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-          <Award className="mr-1 h-3 w-3" />
-          {badge}
-        </span>
-        <span className="inline-flex items-center text-xs text-muted-foreground">
-          <Clock className="mr-1 h-3 w-3" />
-          {duration}
-        </span>
+
+      <h3 className="text-xl font-bold text-foreground mb-2">{program.title}</h3>
+      <p className="text-muted-foreground text-sm mb-4 line-clamp-2">{program.description}</p>
+
+      <div className="flex items-center gap-6 text-sm text-muted-foreground mb-6">
+        <div className="flex items-center gap-1.5">
+          <Clock className="h-4 w-4" />
+          <span>{program.duration}</span>
+        </div>
+        <div className="font-semibold text-foreground">{program.price}</div>
+      </div>
+
+      <div className="mb-6">
+        <h4 className="text-sm font-semibold text-foreground mb-3">Key Outcomes</h4>
+        <ul className="space-y-2">
+          {program.keyOutcomes.map((outcome, idx) => (
+            <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
+              <ChevronRight className="h-4 w-4 text-green-500 shrink-0 mt-0.5" />
+              <span>{outcome}</span>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
-    <ChevronRight className="h-5 w-5 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-primary" />
+
+    <div>
+      {program.buildsOn && (
+        <div className="mb-4 rounded-lg bg-yellow-50 px-4 py-2 text-xs text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-200">
+          <span className="font-medium">Builds on:</span> {program.buildsOn}
+        </div>
+      )}
+
+      <div className="grid grid-cols-2 gap-3">
+        <Button variant="outline" className="w-full">
+          View Syllabus
+        </Button>
+        <Button className="w-full">
+          Enroll Now
+        </Button>
+      </div>
+    </div>
   </div>
 );
 
 const ProgramsSection = () => {
-  const categories = ["All", "Data Analytics", "Generative AI", "Software Development"];
-
   return (
     <section id="programs" className="bg-secondary/20 py-20 lg:py-28">
       <div className="container mx-auto px-4 lg:px-8">
@@ -91,66 +114,10 @@ const ProgramsSection = () => {
           </p>
         </div>
 
-        {/* Category Filters */}
-        <div className="mb-10 flex flex-wrap justify-center gap-3">
-          {categories.map((category, index) => (
-            <button
-              key={category}
-              className={`rounded-full px-5 py-2 text-sm font-medium transition-all ${
-                index === 0
-                  ? "bg-foreground text-background"
-                  : "border border-border bg-transparent text-muted-foreground hover:border-foreground/30 hover:text-foreground"
-              }`}
-            >
-              {category}
-            </button>
+        <div className="grid gap-6 md:grid-cols-2 lg:max-w-5xl mx-auto">
+          {professionalPrograms.map((program, index) => (
+            <ProgramCard key={index} program={program} />
           ))}
-        </div>
-
-        <div className="grid gap-8 lg:grid-cols-2">
-          {/* For Working Professionals */}
-          <div className="rounded-2xl border border-border bg-card p-6 lg:p-8">
-            <div className="mb-6 flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/20">
-                <span className="text-xl">💼</span>
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-foreground">For Working Professionals</h3>
-                <p className="text-sm text-muted-foreground">Upskill while you work</p>
-              </div>
-            </div>
-            <div className="space-y-3">
-              {professionalPrograms.map((program, index) => (
-                <ProgramCard key={index} {...program} />
-              ))}
-            </div>
-            <Button variant="outline" className="mt-6 w-full">
-              View All Programs
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-          </div>
-
-          {/* For College Students */}
-          <div className="rounded-2xl border border-border bg-card p-6 lg:p-8">
-            <div className="mb-6 flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-accent/20">
-                <span className="text-xl">🎓</span>
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-foreground">For College Students</h3>
-                <p className="text-sm text-muted-foreground">Start your tech journey</p>
-              </div>
-            </div>
-            <div className="space-y-3">
-              {studentPrograms.map((program, index) => (
-                <ProgramCard key={index} {...program} />
-              ))}
-            </div>
-            <Button variant="outline" className="mt-6 w-full">
-              View All Programs
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-          </div>
         </div>
       </div>
     </section>
